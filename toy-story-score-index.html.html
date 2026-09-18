@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>得点カウンター</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-align:center;margin:0;padding:30px 15px;background:#f5f5f5}
+h1{margin-bottom:20px}
+#score{font-size:64px;font-weight:700;margin:25px 0}
+.grid{max-width:520px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{font-size:24px;font-weight:600;padding:20px 10px;border:0;border-radius:14px;background:white;box-shadow:0 2px 7px #bbb;cursor:pointer}
+button:active{transform:scale(.97)}
+.undo{margin-top:15px;width:min(520px,100%);background:#ddd}
+.reset{margin-top:12px;background:#222;color:white;width:min(520px,100%)}
+</style>
+</head>
+<body>
+<h1>得点カウンター</h1>
+<div id="score">0</div>
+<div class="grid">
+<button onclick="add(10)">＋10</button>
+<button onclick="add(50)">＋50</button>
+<button onclick="add(100)">＋100</button>
+<button onclick="add(150)">＋150</button>
+</div>
+<button class="undo" onclick="undo()">↩ 1つ戻す</button>
+<button class="reset" onclick="resetScore()">リセット</button>
+<script>
+let score=Number(localStorage.getItem("score")||0);
+let history=[];
+function show(){document.getElementById("score").textContent=score;localStorage.setItem("score",score);}
+function add(n){history.push(score);score+=n;show();}
+function undo(){if(history.length){score=history.pop();show();}}
+function resetScore(){history.push(score);score=0;show();}
+show();
+</script>
+</body>
+</html>
